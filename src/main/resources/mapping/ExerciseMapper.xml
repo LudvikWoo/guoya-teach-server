@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.wuling.mapper.ExerciseMapper" >
+  <resultMap id="BaseResultMap" type="com.example.wuling.model.Exercise" >
+    <result column="SNO" property="sno" jdbcType="VARCHAR" />
+    <result column="SNAME" property="sname" jdbcType="VARCHAR" />
+    <result column="GROUPID" property="groupid" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="TUTOR" property="tutor" jdbcType="VARCHAR" />
+    <result column="EFFECT_STATUS" property="effectStatus" jdbcType="INTEGER" />
+    <result column="CNO" property="cno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SNO, SNAME, GROUPID, URL, STATUS, TUTOR, EFFECT_STATUS, CNO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.wuling.model.ExerciseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from gy_exercise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.example.wuling.model.ExerciseExample" >
+    delete from gy_exercise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.wuling.model.Exercise" >
+    insert into gy_exercise (SNO, SNAME, GROUPID,
+      URL, STATUS, TUTOR,
+      EFFECT_STATUS, CNO)
+    values (#{sno,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, #{groupid,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{tutor,jdbcType=VARCHAR},
+      #{effectStatus,jdbcType=INTEGER}, #{cno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.wuling.model.Exercise" >
+    insert into gy_exercise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sno != null" >
+        SNO,
+      </if>
+      <if test="sname != null" >
+        SNAME,
+      </if>
+      <if test="groupid != null" >
+        GROUPID,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="tutor != null" >
+        TUTOR,
+      </if>
+      <if test="effectStatus != null" >
+        EFFECT_STATUS,
+      </if>
+      <if test="cno != null" >
+        CNO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sno != null" >
+        #{sno,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="tutor != null" >
+        #{tutor,jdbcType=VARCHAR},
+      </if>
+      <if test="effectStatus != null" >
+        #{effectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="cno != null" >
+        #{cno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.wuling.model.ExerciseExample" resultType="java.lang.Integer" >
+    select count(*) from gy_exercise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update gy_exercise
+    <set >
+      <if test="record.sno != null" >
+        SNO = #{record.sno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sname != null" >
+        SNAME = #{record.sname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupid != null" >
+        GROUPID = #{record.groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.tutor != null" >
+        TUTOR = #{record.tutor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effectStatus != null" >
+        EFFECT_STATUS = #{record.effectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.cno != null" >
+        CNO = #{record.cno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update gy_exercise
+    set SNO = #{record.sno,jdbcType=VARCHAR},
+      SNAME = #{record.sname,jdbcType=VARCHAR},
+      GROUPID = #{record.groupid,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      TUTOR = #{record.tutor,jdbcType=VARCHAR},
+      EFFECT_STATUS = #{record.effectStatus,jdbcType=INTEGER},
+      CNO = #{record.cno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!-- 这个方法是我自己加的 -->
+  <select id="selectAllExercise" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from gy_exercise
+  </select>
+</mapper>
